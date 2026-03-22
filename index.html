@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios de clase</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f5f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #1a73e8;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* --- Nuevo estilo para las comisiones --- */
+        .comisiones-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        /* -------------------------------------- */
+
+        .table-container {
+            width: 100%;
+            max-width: 1100px;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow-x: auto; 
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 900px; 
+            border-collapse: collapse;
+            text-align: center;
+            table-layout: fixed; 
+        }
+
+        th {
+            background-color: #1a73e8;
+            color: #ffffff;
+            font-weight: 500;
+            padding: 15px 5px;
+            font-size: 0.95rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .date-span {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #e8f0fe;
+            display: block;
+            margin-top: 4px;
+        }
+
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 0;
+            height: 120px; 
+            vertical-align: middle;
+        }
+
+        .horario-col {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+            background-color: #fafafa;
+            width: 10%; 
+        }
+
+        .cell-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 10px 15px; 
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+
+        .materia-titulo { 
+            font-weight: 700; 
+            margin-bottom: 6px; 
+            color: #222;
+            font-size: 0.85rem;
+        }
+        
+        .materia-tipo { 
+            font-size: 0.75rem; 
+            color: #555; 
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        
+        .materia-aula { 
+            font-size: 0.75rem; 
+            color: #666; 
+        }
+
+        .bg-algebra {
+            background-color: #e8f0fe;
+            border-left: 5px solid #1a73e8;
+        }
+        
+        .bg-calculo {
+            background-color: #fce8e6;
+            border-left: 5px solid #ea4335;
+        }
+
+        .bg-fisica {
+            background-color: #e6f4ea;
+            border-left: 5px solid #34a853;
+        }
+
+        @keyframes latido {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.05); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.05); }
+            70% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        .current-day-cell .cell-content {
+            animation: latido 1.5s infinite;
+            transform-origin: center;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .current-day-header {
+            background-color: #1557b0;
+            animation: latido 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Horarios de clase</h1>
+
+    <div class="comisiones-container">
+        <span class="badge bg-calculo">Cálculo I: <strong>Comisión C19</strong></span>
+        <span class="badge bg-algebra">Álgebra y Geometría: <strong>Comisión A19</strong></span>
+        <span class="badge bg-fisica">Física I: <strong>Comisión F15</strong></span>
+    </div>
+
+    <div class="table-container">
+        <table id="horario-table">
+            <thead>
+                <tr>
+                    <th class="horario-col">Horario</th>
+                    <th id="th-lunes">Lunes <span class="date-span" id="date-1"></span></th>
+                    <th id="th-martes">Martes <span class="date-span" id="date-2"></span></th>
+                    <th id="th-miercoles">Miércoles <span class="date-span" id="date-3"></span></th>
+                    <th id="th-jueves">Jueves <span class="date-span" id="date-4"></span></th>
+                    <th id="th-viernes">Viernes <span class="date-span" id="date-5"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="horario-col"><div class="cell-content">14:00 a<br>16:00</div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td class="bg-algebra">
+                        <div class="cell-content">
+                            <span class="materia-titulo">Álgebra y Geometría<br>Analítica</span>
+                            <span class="materia-tipo">TEÓRICA</span>
+                            <span class="materia-aula">ANFITEATRO A1</span>
+                        </div>
+                    </td>
+                    <td class="bg-calculo">
+                        <div class="cell-content">
+                            <span class="materia-titulo">Cálculo I</span>
+                            <span class="materia-tipo">PRÁCTICA</span>
+                            <span class="materia-aula">Block 1 - Aula 1-1-3</span>
+                        </div>
+                    </td>
+                    <td class="bg-algebra">
+                        <div class="cell-content">
+                            <span class="materia-titulo">Álgebra y Geometría<br>Analítica</span>
+                            <span class="materia-tipo">TEÓRICA</span>
+                            <span class="materia-aula">ANFITEATRO A1</span>
+                        </div>
+                    </td>
+                    <td><div class="cell-content"></div></td>
+                </tr>
+
+                <tr>
+                    <td class="horario-col"><div class="cell-content">16:00 a<br>18:00</div></td>
+                    <td class="bg-fisica">
+                        <div class="cell-content">
+                            <span class="materia-titulo">Física I</span>
+                            <span class="materia-tipo">TEÓRICA</span>
+                            <span class="materia-aula">ANFITEATRO A1</span>
+                        </div>
+                    </td>
+                    <td class="bg-calculo">
+                        <div class="cell-content">
+                            <span class="materia-titulo">Cálculo I</span>
+                            <span class="materia-tipo">TEÓRICA</span>
+                            <span class="materia-aula">ANFITEATRO A1</span>
+                        </div>
+                    </td>
+                    <td><div class="cell-content"></div></td>
+                    <td class="bg-algebra">
+                        <div class="cell-content">
+                            <span class="materia-titulo">Álgebra y Geometría<br>Analítica</span>
+                            <span class="materia-tipo">PRÁCTICA</span>
+                            <span class="materia-aula">Block 1 - Aula 1-1-8</span>
+                        </div>
+                    </td>
+                    <td><div class="cell-content"></div></td>
+                </tr>
+
+                <tr>
+                    <td class="horario-col"><div class="cell-content">18:00 a<br>20:00</div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td class="bg-fisica">
+                        <div class="cell-content">
+                            <span class="materia-titulo">Física I</span>
+                            <span class="materia-tipo">PRÁCTICA</span>
+                            <span class="materia-aula">1-1-5</span>
+                        </div>
+                    </td>
+                    <td class="bg-fisica">
+                        <div class="cell-content">
+                            <span class="materia-titulo">Física I</span>
+                            <span class="materia-tipo">TEÓRICA</span>
+                            <span class="materia-aula">ANFITEATRO A1</span>
+                        </div>
+                    </td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            
+            // LÍNEA DE PRUEBA: Descomenta la siguiente línea quitando las dos barras (//)
+            // para obligar al sistema a creer que hoy es Lunes y ver la animación.
+            // today.setDate(today.getDate() + 1);
+            
+            const currentDayOfWeek = today.getDay(); 
+            
+            // 1. Calcular fechas
+            let diffToMonday = 0;
+            
+            if (currentDayOfWeek === 0) {
+                diffToMonday = 1; 
+            } else if (currentDayOfWeek === 6) {
+                diffToMonday = 2;
+            } else {
+                diffToMonday = 1 - currentDayOfWeek;
+            }
+
+            const mondayDate = new Date(today);
+            mondayDate.setDate(today.getDate() + diffToMonday);
+
+            for (let i = 1; i <= 5; i++) {
+                const dateForDay = new Date(mondayDate);
+                dateForDay.setDate(mondayDate.getDate() + (i - 1));
+                
+                const formattedDate = dateForDay.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+                document.getElementById(`date-${i}`).innerText = `(${formattedDate})`;
+            }
+
+            // 2. Animación de Latido
+            if (currentDayOfWeek >= 1 && currentDayOfWeek <= 5) {
+                const table = document.getElementById('horario-table');
+                const targetColumnIndex = currentDayOfWeek + 1;
+                
+                const th = table.querySelector(`th:nth-child(${targetColumnIndex})`);
+                if(th) th.classList.add('current-day-header');
+
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const td = row.querySelector(`td:nth-child(${targetColumnIndex})`);
+                    if (td && td.innerText.trim() !== "") {
+                        td.classList.add('current-day-cell');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
