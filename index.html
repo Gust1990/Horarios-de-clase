@@ -16,7 +16,7 @@
         }
 
         h1 {
-            color: #1a73e8;
+            color: #2c3e50;
             font-size: 1.5rem;
             font-weight: 500;
             margin-bottom: 15px;
@@ -24,7 +24,7 @@
         }
         
         h2 {
-            color: #1a73e8;
+            color: #2c3e50;
             font-size: 1.3rem;
             font-weight: 500;
             margin-top: 40px;
@@ -32,7 +32,6 @@
             text-align: center;
         }
 
-        /* --- Nuevo estilo para las comisiones --- */
         .comisiones-container {
             display: flex;
             gap: 15px;
@@ -49,7 +48,6 @@
             color: #333;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        /* -------------------------------------- */
 
         .table-container {
             width: 100%;
@@ -57,6 +55,7 @@
             background: #fff;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             overflow-x: auto; 
+            -webkit-overflow-scrolling: touch;
             border-radius: 8px;
             margin-bottom: 20px;
         }
@@ -70,7 +69,7 @@
         }
 
         th {
-            background-color: #1a73e8;
+            background-color: #2c3e50;
             color: #ffffff;
             font-weight: 500;
             padding: 15px 5px;
@@ -78,10 +77,25 @@
             border: 1px solid #e0e0e0;
         }
 
+        th.horario-col {
+            position: sticky;
+            left: 0;
+            z-index: 3;
+            background-color: #2c3e50;
+        }
+
+        td.horario-col {
+            position: sticky;
+            left: 0;
+            z-index: 2;
+            background-color: #fafafa;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+
         .date-span {
             font-size: 0.8rem;
             font-weight: 400;
-            color: #e8f0fe;
+            color: #ecf0f1;
             display: block;
             margin-top: 4px;
         }
@@ -97,8 +111,8 @@
             font-weight: 600;
             color: #333;
             font-size: 0.9rem;
-            background-color: #fafafa;
             width: 10%; 
+            min-width: 90px;
         }
 
         .cell-content {
@@ -133,22 +147,17 @@
         }
 
         .bg-algebra {
-            background-color: #e8f0fe;
-            border-left: 5px solid #1a73e8;
-        }
-        
-        .bg-calculo {
-            background-color: #fce8e6;
-            border-left: 5px solid #ea4335;
+            background-color: #e8f8f5;
+            border-left: 5px solid #1abc9c;
         }
 
         .bg-fisica {
-            background-color: #e6f4ea;
-            border-left: 5px solid #34a853;
+            background-color: #fdf2e9;
+            border-left: 5px solid #e67e22;
         }
         
         .bg-cerrado {
-            background-color: #4a4a4a;
+            background-color: #bdc3c7;
         }
 
         .tabla-consultas td {
@@ -156,7 +165,7 @@
         }
 
         .tabla-consultas .materia-titulo {
-            color: #1a73e8;
+            color: #16a085;
         }
 
         @keyframes latido {
@@ -176,7 +185,7 @@
         }
         
         .current-day-header {
-            background-color: #1557b0;
+            background-color: #1a252f;
             animation: latido 1.5s infinite;
         }
     </style>
@@ -186,7 +195,6 @@
     <h1>Horarios de clase</h1>
 
     <div class="comisiones-container">
-        <span class="badge bg-calculo">Cálculo I: <strong>Comisión C19</strong></span>
         <span class="badge bg-algebra">Álgebra y Geometría: <strong>Comisión A19</strong></span>
         <span class="badge bg-fisica">Física I: <strong>Comisión F15</strong></span>
     </div>
@@ -214,13 +222,7 @@
                             <span class="materia-aula">ANFITEATRO A1</span>
                         </div>
                     </td>
-                    <td class="bg-calculo">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Cálculo I</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">Block 1 - Aula 1-1-3</span>
-                        </div>
-                    </td>
+                    <td><div class="cell-content"></div></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
                             <span class="materia-titulo">Álgebra y Geometría<br>Analítica</span>
@@ -240,13 +242,7 @@
                             <span class="materia-aula">ANFITEATRO A1</span>
                         </div>
                     </td>
-                    <td class="bg-calculo">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Cálculo I</span>
-                            <span class="materia-tipo">TEÓRICA</span>
-                            <span class="materia-aula">ANFITEATRO A1</span>
-                        </div>
-                    </td>
+                    <td><div class="cell-content"></div></td>
                     <td><div class="cell-content"></div></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
@@ -282,7 +278,7 @@
         </table>
     </div>
 
-    <h2>Horarios de Consulta AyGA</h2>
+    <h2>Consultas de AyGA 2026: Solo por la semana del 11/05</h2>
     <div class="table-container">
         <table class="tabla-consultas">
             <thead>
@@ -298,43 +294,11 @@
             <tbody>
                 <tr>
                     <td class="horario-col"><div class="cell-content">10:00 a<br>11:00</div></td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
-                        </div>
-                    </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-0-1</span>
-                        </div>
-                    </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-cerrado"></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">11:00 a<br>12:00</div></td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
-                        </div>
-                    </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-0-1</span>
-                        </div>
-                    </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-cerrado"></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">12:00 a<br>13:00</div></td>
@@ -342,23 +306,10 @@
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
                             <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
-                        </div>
-                    </td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA Y TEÓRICA</span>
-                            <span class="materia-aula">2-4-6</span>
-                        </div>
-                    </td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
                             <span class="materia-aula">1-0-1</span>
                         </div>
                     </td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
@@ -374,23 +325,10 @@
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
                             <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
-                        </div>
-                    </td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA Y TEÓRICA</span>
-                            <span class="materia-aula">2-4-6</span>
-                        </div>
-                    </td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
                             <span class="materia-aula">1-0-1</span>
                         </div>
                     </td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
@@ -412,16 +350,10 @@
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
                             <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
+                            <span class="materia-aula">Hasta 14:30 1-0-1<br>Luego en 1-1-3</span>
                         </div>
                     </td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA Y TEÓRICA</span>
-                            <span class="materia-aula">1-1-3</span>
-                        </div>
-                    </td>
+                    <td class="bg-cerrado"></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
@@ -453,13 +385,7 @@
                             <span class="materia-aula">1-1-3</span>
                         </div>
                     </td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
-                        </div>
-                    </td>
+                    <td class="bg-cerrado"></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
@@ -491,13 +417,7 @@
                             <span class="materia-aula">1-1-3</span>
                         </div>
                     </td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA Y TEÓRICA</span>
-                            <span class="materia-aula">1-1-3</span>
-                        </div>
-                    </td>
+                    <td class="bg-cerrado"></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
@@ -505,8 +425,7 @@
                             <span class="materia-aula">1-0-1</span>
                         </div>
                     </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-cerrado"></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">17:00 a<br>18:00</div></td>
@@ -517,13 +436,7 @@
                             <span class="materia-aula">1-1-3</span>
                         </div>
                     </td>
-                    <td class="bg-algebra">
-                        <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
-                        </div>
-                    </td>
+                    <td class="bg-cerrado"></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
                             <span class="materia-titulo">Consulta</span>
@@ -531,8 +444,7 @@
                             <span class="materia-aula">1-0-1</span>
                         </div>
                     </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-cerrado"></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
                 </tr>
             </tbody>
         </table>
@@ -541,23 +453,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const today = new Date();
-            
-            // LÍNEA DE PRUEBA: Descomenta la siguiente línea quitando las dos barras (//)
-            // para obligar al sistema a creer que hoy es Lunes y ver la animación.
-            // today.setDate(today.getDate() + 1);
-            
             const currentDayOfWeek = today.getDay(); 
-            
-            // 1. Calcular fechas
-            let diffToMonday = 0;
-            
-            if (currentDayOfWeek === 0) {
-                diffToMonday = 1; 
-            } else if (currentDayOfWeek === 6) {
-                diffToMonday = 2;
-            } else {
-                diffToMonday = 1 - currentDayOfWeek;
-            }
+            let diffToMonday = (currentDayOfWeek === 0) ? 1 : (currentDayOfWeek === 6) ? 2 : 1 - currentDayOfWeek;
 
             const mondayDate = new Date(today);
             mondayDate.setDate(today.getDate() + diffToMonday);
@@ -565,16 +462,13 @@
             for (let i = 1; i <= 5; i++) {
                 const dateForDay = new Date(mondayDate);
                 dateForDay.setDate(mondayDate.getDate() + (i - 1));
-                
                 const formattedDate = dateForDay.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
                 document.getElementById(`date-${i}`).innerText = `(${formattedDate})`;
             }
 
-            // 2. Animación de Latido
             if (currentDayOfWeek >= 1 && currentDayOfWeek <= 5) {
                 const table = document.getElementById('horario-table');
                 const targetColumnIndex = currentDayOfWeek + 1;
-                
                 const th = table.querySelector(`th:nth-child(${targetColumnIndex})`);
                 if(th) th.classList.add('current-day-header');
 
