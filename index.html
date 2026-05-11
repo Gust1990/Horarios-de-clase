@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horarios de clase</title>
     
-    <!-- Iconos de la Aplicación (Universidad) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48dGV4dCB5PSIuOWVtIiBmb250LXNpemU9IjkwIj7wn4+rPC90ZXh0Pjwvc3ZnPg==">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y0ZjVmOCIvPjx0ZXh0IHk9Ii45ZW0iIGZvbnQtc2l6ZT0iOTAiPvCfj6s8L3RleHQ+PC9zdmc+">
-    
-    <!-- Web App Manifest embebido en Base64 para que el icono funcione al instalar -->
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiSG9yYXJpb3MiLCJzaG9ydF9uYW1lIjoiSG9yYXJpb3MiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y0ZjVmOCIsInRoZW1lX2NvbG9yIjoiIzJjM2U1MCIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhOQ2IzZzFJakFnTUNBeE1EQWdNVEF3SWo0OGRHVjRkQ0I1UFNJdU9XVnRJakJtYjI1MExYTnBlbVU5SWprd0lqNnduNCtyUEM5MFpYaDBQand2YzNaZk5BPT0iLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+    <link rel="icon" type="image/svg+xml" sizes="192x192" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%8F%AB%3C%2Ftext%3E%3C%2Fsvg%3E">
+    <link rel="apple-touch-icon" type="image/svg+xml" sizes="192x192" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%232c3e50%22%2F%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%8F%AB%3C%2Ftext%3E%3C%2Fsvg%3E">
     
     <meta name="theme-color" content="#2c3e50">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Horarios">
@@ -96,9 +93,10 @@
             left: 0;
             z-index: 3;
             background-color: #2c3e50;
+            color: #ffffff;
         }
 
-        /* Celda fija de la columna de horario - ahora oscura para contrastar con letras blancas */
+        /* Celda fija de la columna de horario - fondo oscuro para contrastar con letras blancas */
         td.horario-col {
             position: sticky;
             left: 0;
@@ -122,13 +120,17 @@
             vertical-align: middle;
         }
 
-        /* Estilos del texto de la columna de horario */
+        /* Estilos del texto de la columna de horario, forzado a BLANCO */
         .horario-col {
             font-weight: 600;
-            color: #ffffff; /* Letras en blanco */
+            color: #ffffff !important; 
             font-size: 0.9rem;
             width: 10%; 
             min-width: 90px;
+        }
+
+        td.horario-col .cell-content {
+            color: #ffffff;
         }
 
         .cell-content {
