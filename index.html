@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horarios de clase</title>
+    
+    <!-- Iconos de la Aplicación (Universidad) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48dGV4dCB5PSIuOWVtIiBmb250LXNpemU9IjkwIj7wn4+rPC90ZXh0Pjwvc3ZnPg==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y0ZjVmOCIvPjx0ZXh0IHk9Ii45ZW0iIGZvbnQtc2l6ZT0iOTAiPvCfj6s8L3RleHQ+PC9zdmc+">
+    
+    <!-- Web App Manifest embebido en Base64 para que el icono funcione al instalar -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiSG9yYXJpb3MiLCJzaG9ydF9uYW1lIjoiSG9yYXJpb3MiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y0ZjVmOCIsInRoZW1lX2NvbG9yIjoiIzJjM2U1MCIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhOQ2IzZzFJakFnTUNBeE1EQWdNVEF3SWo0OGRHVjRkQ0I1UFNJdU9XVnRJakJtYjI1MExYTnBlbVU5SWprd0lqNnduNCtyUEM5MFpYaDBQand2YzNaZk5BPT0iLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+    
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Horarios">
+    
     <style>
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -77,6 +90,7 @@
             border: 1px solid #e0e0e0;
         }
 
+        /* Encabezado fijo de la columna de horario */
         th.horario-col {
             position: sticky;
             left: 0;
@@ -84,12 +98,13 @@
             background-color: #2c3e50;
         }
 
+        /* Celda fija de la columna de horario - ahora oscura para contrastar con letras blancas */
         td.horario-col {
             position: sticky;
             left: 0;
             z-index: 2;
-            background-color: #fafafa;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            background-color: #2c3e50; 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
         }
 
         .date-span {
@@ -107,9 +122,10 @@
             vertical-align: middle;
         }
 
+        /* Estilos del texto de la columna de horario */
         .horario-col {
             font-weight: 600;
-            color: #333;
+            color: #ffffff; /* Letras en blanco */
             font-size: 0.9rem;
             width: 10%; 
             min-width: 90px;
