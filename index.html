@@ -4,16 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horarios de clase</title>
-    
-    <link rel="icon" type="image/svg+xml" sizes="192x192" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%8F%AB%3C%2Ftext%3E%3C%2Fsvg%3E">
-    <link rel="apple-touch-icon" type="image/svg+xml" sizes="192x192" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%232c3e50%22%2F%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%8F%AB%3C%2Ftext%3E%3C%2Fsvg%3E">
-    
-    <meta name="theme-color" content="#2c3e50">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Horarios">
-    
     <style>
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -76,6 +66,7 @@
             border-collapse: collapse;
             text-align: center;
             table-layout: fixed; 
+            background: #fff;
         }
 
         th {
@@ -87,22 +78,19 @@
             border: 1px solid #e0e0e0;
         }
 
-        /* Encabezado fijo de la columna de horario */
         th.horario-col {
             position: sticky;
             left: 0;
             z-index: 3;
             background-color: #2c3e50;
-            color: #ffffff;
         }
 
-        /* Celda fija de la columna de horario - fondo oscuro para contrastar con letras blancas */
         td.horario-col {
             position: sticky;
             left: 0;
             z-index: 2;
-            background-color: #2c3e50; 
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            background-color: #fafafa;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
         }
 
         .date-span {
@@ -120,17 +108,12 @@
             vertical-align: middle;
         }
 
-        /* Estilos del texto de la columna de horario, forzado a BLANCO */
         .horario-col {
             font-weight: 600;
-            color: #ffffff !important; 
+            color: #333;
             font-size: 0.9rem;
             width: 10%; 
             min-width: 90px;
-        }
-
-        td.horario-col .cell-content {
-            color: #ffffff;
         }
 
         .cell-content {
@@ -174,16 +157,60 @@
             border-left: 5px solid #e67e22;
         }
         
+        .bg-particular {
+            background-color: #e8f0fe;
+            border-left: 5px solid #1a73e8;
+        }
+
         .bg-cerrado {
             background-color: #bdc3c7;
         }
 
+        /* Estilos específicos para la tabla unificada de consultas y particulares */
         .tabla-consultas td {
-            height: 90px;
+            height: auto;
         }
 
-        .tabla-consultas .materia-titulo {
+        .tabla-consultas .cell-content {
+            min-height: 110px;
+            padding: 8px;
+            gap: 8px;
+        }
+
+        .consulta-card {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .consulta-card.bg-algebra {
+            background-color: #e8f8f5;
+            border-left: 4px solid #1abc9c;
+        }
+
+        .consulta-card.bg-fisica {
+            background-color: #fdf2e9;
+            border-left: 4px solid #e67e22;
+        }
+
+        .consulta-card.bg-particular {
+            background-color: #e8f0fe;
+            border-left: 4px solid #1a73e8;
+        }
+
+        .materia-titulo.color-algebra {
             color: #16a085;
+        }
+
+        .materia-titulo.color-fisica {
+            color: #d35400; 
+        }
+
+        .materia-titulo.color-particular {
+            color: #1558d6;
         }
 
         @keyframes latido {
@@ -215,6 +242,7 @@
     <div class="comisiones-container">
         <span class="badge bg-algebra">Álgebra y Geometría: <strong>Comisión A19</strong></span>
         <span class="badge bg-fisica">Física I: <strong>Comisión F15</strong></span>
+        <span class="badge bg-particular">Profesor Particular</span>
     </div>
 
     <div class="table-container">
@@ -222,14 +250,56 @@
             <thead>
                 <tr>
                     <th class="horario-col">Horario</th>
-                    <th id="th-lunes">Lunes <span class="date-span" id="date-1"></span></th>
-                    <th id="th-martes">Martes <span class="date-span" id="date-2"></span></th>
-                    <th id="th-miercoles">Miércoles <span class="date-span" id="date-3"></span></th>
-                    <th id="th-jueves">Jueves <span class="date-span" id="date-4"></span></th>
-                    <th id="th-viernes">Viernes <span class="date-span" id="date-5"></span></th>
+                    <th>Lunes <span class="date-span" id="date-1"></span></th>
+                    <th>Martes <span class="date-span" id="date-2"></span></th>
+                    <th>Miércoles <span class="date-span" id="date-3"></span></th>
+                    <th>Jueves <span class="date-span" id="date-4"></span></th>
+                    <th>Viernes <span class="date-span" id="date-5"></span></th>
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td class="horario-col"><div class="cell-content">08:00 a<br>10:00</div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td class="bg-particular">
+                        <div class="cell-content">
+                            <span class="materia-titulo color-particular">Profesor particular</span>
+                            <span class="materia-tipo">PRESENCIAL</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="horario-col"><div class="cell-content">10:00 a<br>12:00</div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td class="bg-particular">
+                        <div class="cell-content">
+                            <span class="materia-titulo color-particular">Profesor particular</span>
+                            <span class="materia-tipo">PRESENCIAL</span>
+                        </div>
+                    </td>
+                    <td><div class="cell-content"></div></td>
+                    <td class="bg-particular">
+                        <div class="cell-content">
+                            <span class="materia-titulo color-particular">Profesor particular</span>
+                            <span class="materia-tipo">PRESENCIAL</span>
+                        </div>
+                    </td>
+                    <td><div class="cell-content"></div></td>
+                </tr>
+
+                <tr>
+                    <td class="horario-col"><div class="cell-content">12:00 a<br>14:00</div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                </tr>
+
                 <tr>
                     <td class="horario-col"><div class="cell-content">14:00 a<br>16:00</div></td>
                     <td><div class="cell-content"></div></td>
@@ -260,7 +330,12 @@
                             <span class="materia-aula">ANFITEATRO A1</span>
                         </div>
                     </td>
-                    <td><div class="cell-content"></div></td>
+                    <td class="bg-particular">
+                        <div class="cell-content">
+                            <span class="materia-titulo color-particular">Profesor particular</span>
+                            <span class="materia-tipo">PRESENCIAL</span>
+                        </div>
+                    </td>
                     <td><div class="cell-content"></div></td>
                     <td class="bg-algebra">
                         <div class="cell-content">
@@ -269,7 +344,12 @@
                             <span class="materia-aula">Block 1 - Aula 1-1-8</span>
                         </div>
                     </td>
-                    <td><div class="cell-content"></div></td>
+                    <td class="bg-particular">
+                        <div class="cell-content">
+                            <span class="materia-titulo color-particular">Profesor particular</span>
+                            <span class="materia-tipo">PRESENCIAL</span>
+                        </div>
+                    </td>
                 </tr>
 
                 <tr>
@@ -292,13 +372,27 @@
                     <td><div class="cell-content"></div></td>
                     <td><div class="cell-content"></div></td>
                 </tr>
+
+                <tr>
+                    <td class="horario-col"><div class="cell-content">21:00 a<br>23:00</div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                    <td class="bg-particular">
+                        <div class="cell-content">
+                            <span class="materia-titulo color-particular">Profesor particular</span>
+                            <span class="materia-tipo">VIRTUAL</span>
+                        </div>
+                    </td>
+                    <td><div class="cell-content"></div></td>
+                    <td><div class="cell-content"></div></td>
+                </tr>
             </tbody>
         </table>
     </div>
 
-    <h2>Consultas de AyGA 2026: Solo por la semana del 11/05</h2>
+    <h2>Clases de Consulta</h2>
     <div class="table-container">
-        <table class="tabla-consultas">
+        <table id="consultas-table" class="tabla-consultas">
             <thead>
                 <tr>
                     <th class="horario-col">Horario</th>
@@ -311,158 +405,331 @@
             </thead>
             <tbody>
                 <tr>
+                    <td class="horario-col"><div class="cell-content">08:00 a<br>09:00</div></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="bg-cerrado"></td>
+                </tr>
+                <tr>
+                    <td class="horario-col"><div class="cell-content">09:00 a<br>10:00</div></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="bg-cerrado"></td>
+                </tr>
+                <tr>
                     <td class="horario-col"><div class="cell-content">10:00 a<br>11:00</div></td>
-                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="bg-cerrado"></td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">11:00 a<br>12:00</div></td>
-                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="bg-cerrado"></td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">12:00 a<br>13:00</div></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-0-1</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>1-0-1</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">2-4-8</span>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>2-4-8</span>
+                            </div>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
                         </div>
                     </td>
                     <td class="bg-cerrado"></td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">13:00 a<br>14:00</div></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-0-1</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>1-0-1</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">2-4-8</span>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-algebra">
+                    <td class="bg-cerrado"></td>
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-0-16</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>2-4-8</span>
+                            </div>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>1-0-16</span>
+                            </div>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">14:00 a<br>15:00</div></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">Hasta 14:30 1-0-1<br>Luego en 1-1-3</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>Hasta 14:30 1-0-1<br>Luego en 1-1-3</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">2-4-6</span>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-2</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>2-4-6</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA Y TEÓRICA</span>
-                            <span class="materia-aula">1-0-16</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>1-1-2</span>
+                            </div>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA Y TEÓRICA</span>
+                                <span class="materia-aula">AyGA<br>1-0-16</span>
+                            </div>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">15:00 a<br>16:00</div></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>1-1-3</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">2-4-6</span>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-2</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>2-4-6</span>
+                            </div>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA Y TEÓRICA</span>
-                            <span class="materia-aula">1-0-16</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>1-1-2</span>
+                            </div>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA Y TEÓRICA</span>
+                                <span class="materia-aula">AyGA<br>1-0-16</span>
+                            </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">16:00 a<br>17:00</div></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>1-1-3</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-cerrado"></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA Y TEÓRICA</span>
-                            <span class="materia-aula">1-0-1</span>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA Y TEÓRICA</span>
+                                <span class="materia-aula">AyGA<br>1-0-1</span>
+                            </div>
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
                         </div>
                     </td>
                     <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
                 </tr>
                 <tr>
                     <td class="horario-col"><div class="cell-content">17:00 a<br>18:00</div></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">PRÁCTICA</span>
-                            <span class="materia-aula">1-1-3</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">PRÁCTICA</span>
+                                <span class="materia-aula">AyGA<br>1-1-3</span>
+                            </div>
                         </div>
                     </td>
                     <td class="bg-cerrado"></td>
-                    <td class="bg-algebra">
+                    <td>
                         <div class="cell-content">
-                            <span class="materia-titulo">Consulta</span>
-                            <span class="materia-tipo">TEÓRICA</span>
-                            <span class="materia-aula">1-0-1</span>
+                            <div class="consulta-card bg-algebra">
+                                <span class="materia-titulo color-algebra">TEÓRICA</span>
+                                <span class="materia-aula">AyGA<br>1-0-1</span>
+                            </div>
                         </div>
                     </td>
-                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td>
+                    <td class="bg-cerrado"></td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="horario-col"><div class="cell-content">18:00 a<br>19:00</div></td>
+                    <td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td><td class="bg-cerrado"></td>
+                    <td>
+                        <div class="cell-content">
+                            <div class="consulta-card bg-fisica">
+                                <span class="materia-titulo color-fisica">CONSULTA</span>
+                                <span class="materia-aula">Física I<br>2-0-2</span>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -485,17 +752,23 @@
             }
 
             if (currentDayOfWeek >= 1 && currentDayOfWeek <= 5) {
-                const table = document.getElementById('horario-table');
+                const tableIds = ['horario-table', 'consultas-table'];
                 const targetColumnIndex = currentDayOfWeek + 1;
-                const th = table.querySelector(`th:nth-child(${targetColumnIndex})`);
-                if(th) th.classList.add('current-day-header');
 
-                const rows = table.querySelectorAll('tbody tr');
-                rows.forEach(row => {
-                    const td = row.querySelector(`td:nth-child(${targetColumnIndex})`);
-                    if (td && td.innerText.trim() !== "") {
-                        td.classList.add('current-day-cell');
-                    }
+                tableIds.forEach(id => {
+                    const table = document.getElementById(id);
+                    if (!table) return;
+
+                    const th = table.querySelector(`thead th:nth-child(${targetColumnIndex})`);
+                    if (th) th.classList.add('current-day-header');
+
+                    const rows = table.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const td = row.querySelector(`td:nth-child(${targetColumnIndex})`);
+                        if (td && td.innerText.trim() !== "" && !td.classList.contains('bg-cerrado')) {
+                            td.classList.add('current-day-cell');
+                        }
+                    });
                 });
             }
         });
